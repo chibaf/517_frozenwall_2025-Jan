@@ -89,14 +89,14 @@ while True:
   print(ss)
   data.pop(-1)
   data2.pop(-1)
-  data.insert(0,curr)
+  data.insert(0,float(curr))
   data2.insert(0,array2)
 #  rez = [[data[j][i] for j in range(len(data))] for i in range(len(data[0]))]
   rez2 = [[data2[j][i] for j in range(len(data2))] for i in range(len(data2[0]))]
   x=range(0, 10, 1)
   plt.figure(100)
   plt.clf()
-  plt.ylim(0,5000)
+  plt.ylim(0,400000)
   plt.plot(x,data)
 #  lin=[0]*8
 #  h1=[]
