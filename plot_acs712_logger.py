@@ -81,7 +81,8 @@ while True:
      print('go12.txt was not found -> then the ssr12 is off.')
 #     GPIO.output(12,False)
      sw12="off"
-  ss=ss+","+sw12
+     
+#  ss=ss+","+sw12
   f.write(ss+"\n")
   #
   
