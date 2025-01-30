@@ -138,13 +138,15 @@ void loop()
 
     digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
 
+    Serial.print("DCU, ");
+
     Serial.print(vrms_sum);
 //    Serial.print("Vrms, ");
-    Serial.print(" ");
+    Serial.print(", ");
     
     Serial.print(irms_sum);
 //    Serial.print("Irms, ");
-    Serial.print(" ");
+    Serial.print(", ");
     
 //    Serial.print(vrms_sum * irms_sum);
 //    Serial.print("VA, ");
