@@ -13,9 +13,7 @@ today = date.today()
 t=time.localtime()
 current_time=time.strftime("_H%H_M%M_S%S",t)
 fn="ACS_LOG_"+str(today)+current_time+".csv"
-#fn_s12="SSR12_"+str(today)+current_time+".csv"
 f=open(fn,'w',encoding="utf-8")
-#fs12=open(fn_s12,'w',encoding="utf-8")
 start = time.time()
 
 ldata0=[0]*10
@@ -84,27 +82,18 @@ while True:
      
 #  ss=ss+","+sw12
   f.write(ss+"\n")
-  #
   
   print(ss)
   data.pop(-1)
   data2.pop(-1)
   data.insert(0,float(curr))
   data2.insert(0,array2)
-#  rez = [[data[j][i] for j in range(len(data))] for i in range(len(data[0]))]
-  rez2 = [[data2[j][i] for j in range(len(data2))] for i in range(len(data2[0]))]
+  rez2 = [[data2[j][i] for j in range(len(data2))] for i in range(len(data2[0]))] # transposing a matrix
   x=range(0, 10, 1)
   plt.figure(100)
   plt.clf()
   plt.ylim(0,400000)
   plt.plot(x,data)
-#  lin=[0]*8
-#  h1=[]
-#  for i in range(0,8):
-#   lin[i],=plt.plot(x,rez[i],label="A"+str(i))
-#  for i in range(0,7):
-#    h1.append(lin[i])
-#  plt.legend(handles=h1)
   plt.pause(0.1)
   plt.figure(200)
   plt.clf()
@@ -119,7 +108,6 @@ while True:
   plt.pause(0.1)
  except KeyboardInterrupt:
   f.close()
-#  fs12.close()
   ser1.close()
   ser2.close()
   exit()
