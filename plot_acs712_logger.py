@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from datetime import date
 import time
 import matplotlib.pyplot as plt
@@ -41,10 +42,11 @@ while True:
   ss=str(time.time()-int(time.time()))
   rttime=round(ttime,2)
   curr=acs712.read(ser1)
+  cur=curr.split(",")
   array2=sport.read_logger(ser2)
   ss=st+ss[1:5]+","+str(rttime)+","
   ss12=ss
-  ss=ss+str(curr)+","
+  ss=ss+str(cur[1])+","
   for i in range(0,len(array2)-1):
     ss=ss+str(array2[i])+","
   ss=ss+str(array2[len(array2)-1])
@@ -86,7 +88,7 @@ while True:
   print(ss)
   data.pop(-1)
   data2.pop(-1)
-  data.insert(0,float(curr))
+  data.insert(0,float(cur[1]))
   data2.insert(0,array2)
   rez2 = [[data2[j][i] for j in range(len(data2))] for i in range(len(data2[0]))] # transposing a matrix
   x=range(0, 10, 1)
