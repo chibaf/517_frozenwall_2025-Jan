@@ -9,7 +9,7 @@ import os
 import sys
 
 from read_m5_class import m5logger
-from read_acs712_class import read_acs712
+from readser_class import readser
 
 today = date.today()
 t=time.localtime()
@@ -20,9 +20,9 @@ start = time.time()
 
 ldata0=[0]*10
 ldata=[ldata0]*10
-ser1 = serial.Serial("/dev/ttyACM0",19200)
+ser1 = serial.Serial("/dev/ttyACM0",9600)
 ser2 = serial.Serial("/dev/ttyUSB0",115200)
-acs712=read_acs712()
+read_ser=readser()
 sport=m5logger()
 
 data=[0]*10
@@ -37,12 +37,17 @@ while True:
   st=time.strftime("%Y %b %d %H:%M:%S", time.localtime())
   ss=str(time.time()-int(time.time()))
   rttime=round(ttime,2)
-  curr=acs712.read(ser1)
-  cur=curr.split(",")
+  curr=read_ser.read(ser1)
+  print(curr)
+  cur=0.0
+  print(curr[0])
+  if curr[0]=="CUR":
+    cur=curr[1]
+  print(cur)
   array2=sport.read_logger(ser2)
   ss=st+ss[1:5]+","+str(rttime)+","
   ss12=ss
-  ss=ss+str(cur[1])+","
+  ss=ss+str(cur)+","
   for i in range(0,len(array2)-1):
     ss=ss+str(array2[i])+","
   ss=ss+str(array2[len(array2)-1])
@@ -51,7 +56,7 @@ while True:
   print(ss)
   data.pop(-1)
   data2.pop(-1)
-  data.insert(0,float(cur[1]))
+  data.insert(0,float(cur))
   data2.insert(0,array2)
   rez2 = [[data2[j][i] for j in range(len(data2))] for i in range(len(data2[0]))] # transposing a matrix
   x=range(0, 10, 1)
