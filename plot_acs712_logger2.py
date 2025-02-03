@@ -38,12 +38,10 @@ while True:
   ss=str(time.time()-int(time.time()))
   rttime=round(ttime,2)
   curr=read_ser.read(ser1)
-  print(curr)
   cur=0.0
   print(curr[0])
   if curr[0]=="CUR":
     cur=curr[1]
-  print(cur)
   array2=sport.read_logger(ser2)
   ss=st+ss[1:5]+","+str(rttime)+","
   ss12=ss
