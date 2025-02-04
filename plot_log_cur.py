@@ -21,14 +21,14 @@ start = time.time()
 ldata0=[0]*10
 ldata=[ldata0]*10
 ser1 = serial.Serial("/dev/ttyACM0",9600)
-ser2 = serial.Serial("/dev/ttyACM0",9600)
+ser2 = serial.Serial("/dev/ttyACM1",9600)
 ser3 = serial.Serial("/dev/ttyUSB0",115200)
 read_ser1=readser()
 read_ser2=readser()
 sport=m5logger()
 
 data=[0]*10
-data02=[0]*8
+data02=[0]*3
 data2=[data02]*10
 data03=[0]*10
 data3=[data03]*10
@@ -41,11 +41,16 @@ while True:
   st=time.strftime("%Y %b %d %H:%M:%S", time.localtime())
   ss=str(time.time()-int(time.time()))
   rttime=round(ttime,2)
-  curr=read_ser1.read(ser1)
-  cur=0.0
-  print(curr[0])
-  if curr[0]=="CUR":
-    cur=curr[1]
+  curr1=read_ser1.read(ser1)
+  curr2=read_ser1.read(ser2)
+  if curr1[0]=="CUR":
+    cur=curr1[1]
+  else:
+    dcu=curr1[1:3]
+  if curr2[0]=="DCU":
+    dcu=curr2[1:3]
+  else:
+    cur=curr2[1]
   array2=sport.read_logger(ser3)
   ss=st+ss[1:5]+","+str(rttime)+","
   ss12=ss
@@ -55,18 +60,24 @@ while True:
   ss=ss+str(array2[len(array2)-1])
   f.write(ss+"\n")
   
-  print(ss)
   data.pop(-1)
+  print(data)
+  data2.pop(-1)
   data3.pop(-1)
   data.insert(0,float(cur))
+  print(data)
+  data2.insert(0,dcu)
   data3.insert(0,array2)
+  rez2 = [[data2[j][i] for j in range(len(data2))] for i in range(len(data2[0]))] # transposing a matrix
   rez3 = [[data3[j][i] for j in range(len(data3))] for i in range(len(data3[0]))] # transposing a matrix
   x=range(0, 10, 1)
+#
   plt.figure(100)
   plt.clf()
   plt.ylim(0,400000)
   plt.plot(x,data)
   plt.pause(0.1)
+#
   plt.figure(200)
   plt.clf()
   plt.ylim(-25,30)
